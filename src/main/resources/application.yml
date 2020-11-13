@@ -1,0 +1,43 @@
+server:
+  port: 6243
+spring:
+  kafka:
+    consumer:
+      group-id: consumer-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: com.example.kafkastudy.*
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+  datasource:
+    url: jdbc:mysql://localhost:3306/KafkaStudy?characterEncoding=utf-8&serverTimezone=UTC
+    username: root
+    password: rootpw
+    maximumPoolSize: 30
+    minimumIdle: 5
+    poolName: write
+    readOnly: false
+    driverClassName: com.mysql.cj.jdbc.Driver
+  jpa:
+    database: MYSQL
+    generate-ddl: true
+    show-sql: true
+    format_sql: true
+    hibernate:
+      ddl-auto: validate
+      format-sql: true
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.springframework: info
+    org.hibernate.type.descriptor.sql: trace
+
+
